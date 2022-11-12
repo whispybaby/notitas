@@ -1,0 +1,16 @@
+{% extends 'autores/plantilla.html' %}
+
+{% block contenido %}
+
+
+<div class="container">
+    <h1>Crear registro</h1>
+    <form method="post">  
+    {% csrf_token %}
+    {{ formulario }}
+    <input type="submit" class="form-control">
+    </form>
+</div>
+
+
+{% endblock contenido %}

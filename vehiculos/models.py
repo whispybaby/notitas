@@ -1,4 +1,5 @@
 from django.db import models
+from mantenciones.models import Mantencion, DetalleMantencion
 
 
 class Marca(models.Model):
@@ -41,6 +42,8 @@ class Vehiculo(models.Model):
     año = models.IntegerField()
     marca = models.ForeignKey(Marca, on_delete=models.RESTRICT)
     modelo = models.ForeignKey(Modelo, on_delete=models.RESTRICT)
+    mantenciones = models.ManyToManyField(
+        Mantencion, related_name='vehiculos', through=DetalleMantencion)
 
     class Meta:
         verbose_name = 'Vehículo'

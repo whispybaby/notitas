@@ -1,0 +1,20 @@
+{% extends 'usuarios/plantilla.html' %}
+
+{% block contenido %}
+
+
+<div class="container">
+    <h1>Recuperacion</h1>
+    <form method="post">  
+    {% csrf_token %}
+    {{ recuperacion }}
+    
+    <div class=" text-center">
+    <button type="button" class="btn btn-secondary my-3 ">Recibir Codigo</button>
+    </div>
+    <input type="submit" class="form-control">
+    </form>
+</div>
+
+
+{% endblock contenido %}

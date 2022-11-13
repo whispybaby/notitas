@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'tipos_mantenciones',
     'marcas',
     'tipos_vehiculos',
+    'modelos',
 ]
 
 MIDDLEWARE = [

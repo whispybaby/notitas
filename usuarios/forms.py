@@ -1,43 +1,45 @@
-from django.forms import ModelForm, widgets
+from django import forms
 from .models import Usuarios
+from django.forms import ModelForm, Form
 
 
 class UsuariosFormulario(ModelForm):
     class Meta:
         model = Usuarios
-        fields = '__all__'
+        exclude = ['hash_contraseña']
         widgets = {
-            'nombre': widgets.TextInput(
+            'nombre': forms.widgets.TextInput(
                 attrs={
                     'class': 'form-control'
                 }
             ),
 
-            'apellido': widgets.TextInput(
+            'apellido': forms.widgets.TextInput(
                 attrs={
                     'class': 'form-control'
                 }
             ),
 
-            'run':  widgets.TextInput(
+            'run':  forms.widgets.TextInput(
                 attrs={
-                    'class': 'form-control'
+                    'class': 'form-control',
+                    'pattern': '\d{1,2}\.\d{3}\.\d{3}-[\dk]'
                 }
             ),
 
-            'correo': widgets.TextInput(
-                attrs={
-                    'class': 'form-control'
-                }
-            ),
-            'hash_contraseña': widgets.NumberInput(
-                attrs={
-                    'class': 'form-control'
-                }
-            ),
-            'valor_max': widgets.NumberInput(
+            'correo': forms.widgets.TextInput(
                 attrs={
                     'class': 'form-control'
                 }
             ),
         }
+    contraseña = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    
+    confirmar_contraseña = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+
+
+class RestablecerFormulario(Form):
+    correo = forms.CharField(widget=forms.TextInput(attrs={ 'class': 'form-control'}))
+    codigo_correo = forms.CharField(widget=forms.TextInput(attrs={ 'class': 'form-control'}))

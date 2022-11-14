@@ -1,7 +1,4 @@
 from django.db import models
-from django.core.exceptions import ValidationError
-from django.utils.translation import gettext_lazy as _
-import re
 
 
 class Marca(models.Model):
@@ -62,7 +59,7 @@ class Vehiculo(models.Model):
         verbose_name_plural = 'Vehículos'
 
     def __str__(self):
-        return f'{self.patente}: {self.marca.nombre} {self.modelo.nombre}'
+        return f'{self.marca.nombre} {self.modelo.nombre}'
 
 
 class DetalleMantencion(models.Model):

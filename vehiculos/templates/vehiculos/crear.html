@@ -3,7 +3,7 @@
 {% block titulo %}Vehiculos crear{% endblock titulo %}
 
 {% block contenido %}
-<h1>Añadir vehículo</h1>
+<h1>{{ operacion }} vehículo</h1>
 <form method="post">
     {% csrf_token %}
     {{ formulario }}

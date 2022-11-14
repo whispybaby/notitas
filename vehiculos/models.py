@@ -1,5 +1,4 @@
 from django.db import models
-from mantenciones.models import Mantencion, DetalleMantencion
 
 
 class Marca(models.Model):
@@ -34,7 +33,18 @@ class Modelo(models.Model):
         verbose_name_plural = 'Modelos'
 
     def __str__(self):
-        return f'{self.marca.nombre} {self.nombre}'
+        return self.nombre
+
+
+class Mantencion(models.Model):
+    nombre = models.CharField(max_length=30)
+
+    class Meta:
+        verbose_name = 'Mantención'
+        verbose_name_plural = 'Mantenciones'
+
+    def __str__(self):
+        return self.nombre
 
 
 class Vehiculo(models.Model):
@@ -43,7 +53,7 @@ class Vehiculo(models.Model):
     marca = models.ForeignKey(Marca, on_delete=models.RESTRICT)
     modelo = models.ForeignKey(Modelo, on_delete=models.RESTRICT)
     mantenciones = models.ManyToManyField(
-        Mantencion, related_name='vehiculos', through=DetalleMantencion)
+        Mantencion, related_name='vehiculos', through='DetalleMantencion')
 
     class Meta:
         verbose_name = 'Vehículo'
@@ -51,3 +61,19 @@ class Vehiculo(models.Model):
 
     def __str__(self):
         return f'{self.patente}: {self.marca.nombre} {self.modelo.nombre}'
+
+
+class DetalleMantencion(models.Model):
+    mantencion = models.ForeignKey(Mantencion, on_delete=models.RESTRICT)
+    vehiculo = models.ForeignKey(Vehiculo, on_delete=models.RESTRICT)
+    precio = models.IntegerField()
+    fecha = models.DateField()
+    kilometraje = models.IntegerField()
+    descripcion = models.CharField(max_length=100, blank=True)
+
+    class Meta:
+        verbose_name = 'Detalle mantención'
+        verbose_name_plural = 'Detalles mantenciones'
+
+    def __str__(self):
+        return f'{self.mantencion.nombre} el {self.fecha}'

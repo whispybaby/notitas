@@ -3,10 +3,9 @@
 {% block titulo %}Vehiculos{% endblock titulo %}
 
 {% block contenido %}
-<h1>{{ operacion }} vehículo</h1>
+<h1>¿Borrar {{ vehiculo.marca }} {{ vehiculo.modelo }}?</h1>
 <form method="post">
     {% csrf_token %}
-    {{ formulario }}
-    <input type="submit" class="btn btn-primary">
+    <input type="submit" value="Eliminar" class="btn btn-primary">
 </form>
 {% endblock contenido %}

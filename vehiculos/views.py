@@ -60,7 +60,13 @@ def actualizar(request, id):
     })
 
 
-def eliminar(_, id):
+def eliminar(request, id):
     vehiculo = Vehiculo.objects.get(id=id)
-    vehiculo.delete()
-    return redirect(reverse('vehiculos:index'))
+    if request.method == 'POST':
+        vehiculo.delete()
+        return redirect(reverse('vehiculos:index'))
+
+    return render(request, 'vehiculos/eliminar.html', {
+        'operacion': 'Eliminar',
+        'vehiculo': vehiculo
+    })

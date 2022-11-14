@@ -8,8 +8,7 @@ class VehiculoFormulario(forms.ModelForm):
         fields = '__all__'
         exclude = ('mantenciones',)
         widgets = {
-            'patente': forms.widgets.TextInput(attrs={'class': 'form-control'}),
-            'año': forms.widgets.NumberInput(attrs={'class': 'form-control'}),
             'marca': forms.widgets.Select(attrs={'class': 'form-select'}),
-            'modelo': forms.widgets.Select(attrs={'class': 'form-select'})
+            'modelo': forms.widgets.Select(attrs={'class': 'form-select'}),
+            'año': forms.widgets.NumberInput(attrs={'class': 'form-control'}),
         }

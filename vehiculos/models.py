@@ -1,4 +1,7 @@
 from django.db import models
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
+import re
 
 
 class Marca(models.Model):
@@ -48,10 +51,9 @@ class Mantencion(models.Model):
 
 
 class Vehiculo(models.Model):
-    patente = models.CharField(max_length=6)
-    año = models.IntegerField()
     marca = models.ForeignKey(Marca, on_delete=models.RESTRICT)
     modelo = models.ForeignKey(Modelo, on_delete=models.RESTRICT)
+    año = models.IntegerField()
     mantenciones = models.ManyToManyField(
         Mantencion, related_name='vehiculos', through='DetalleMantencion')
 

@@ -1,0 +1,11 @@
+{% extends 'plantilla.html' %}
+
+{% block titulo %}Vehiculos{% endblock titulo %}
+
+{% block contenido %}
+<h1>¿Borrar {{ vehiculo.marca }} {{ vehiculo.modelo }}?</h1>
+<form method="post">
+    {% csrf_token %}
+    <input type="submit" value="Eliminar" class="btn btn-primary">
+</form>
+{% endblock contenido %}

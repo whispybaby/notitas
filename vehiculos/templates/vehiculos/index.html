@@ -1,0 +1,48 @@
+{% extends 'plantilla.html' %}
+
+{% block titulo %}Vehiculos{% endblock titulo %}
+
+{% block contenido %}
+
+<h1>Vehículos</h1>
+{% if vehiculos %}
+
+<div class="row gx-sm-3 gy-3">
+    {% for vehiculo in vehiculos %}
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+        <div class="card">
+            <div class="card-body position-relative">
+                <div class="card-title">
+                    <h3>
+                        {{ vehiculo.marca }} {{ vehiculo.modelo }}
+                    </h3>
+                </div>
+                <div class="card-text">
+                    Aquí van las mantenciones
+                </div>
+                <a href="{% url 'vehiculos:vehiculo' vehiculo.id %}" class="stretched-link"></a>
+            </div>
+            <div class="card-footer">
+                <div class="container">
+                    <div class="row justify-content-end">
+                        <div class="col-auto">
+                            <a href="{% url 'vehiculos:actualizar' vehiculo.id %}"
+                                class="text-decoration-none btn btn-primary card-link">⟳</a>
+                        </div>
+                        <div class="col-auto">
+                            <a href="{% url 'vehiculos:eliminar' vehiculo.id %}"
+                                class="text-decoration-none btn btn-primary card-link">X</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% else %}
+<h3>No hay vehículos</h3>
+{% endif %}
+
+{% endblock contenido %}

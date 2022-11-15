@@ -1,0 +1,12 @@
+{% extends 'plantilla.html' %}
+
+{% block titulo %}Vehiculos{% endblock titulo %}
+
+{% block contenido %}
+<h1>{{ operacion }} vehículo</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ formulario }}
+    <input type="submit" class="btn btn-primary">
+</form>
+{% endblock contenido %}

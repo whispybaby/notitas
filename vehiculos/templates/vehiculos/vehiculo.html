@@ -4,6 +4,15 @@
 
 {% block contenido %}
 
-<h1>{{ vehiculo.marca }} {{ vehiculo.modelo }}</h1>
+<h1>Mantenciones de {{ vehiculo.marca }} {{ vehiculo.modelo }}</h1>
+
+{% if vehiculo.mantenciones|length > 0 %}
+<h2>Hay mantenciones</h2>
+{% else %}
+
+<h2>No hay mantenciones</h2>
+<a href="{% url 'vehiculos:crear_mantencion' vehiculo.id %}">Crear mantención</a>
+
+{% endif %}
 
 {% endblock contenido %}

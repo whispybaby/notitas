@@ -3,7 +3,7 @@ from usuarios.forms import UsuariosFormulario, RestablecerCuenta, IniciarSesion 
 from django.contrib.auth import login, logout, authenticate
 from django.urls import reverse
 import hashlib
-from usuarios.models import Usuarios
+from usuarios.models import Usuario
 
 
 
@@ -54,9 +54,9 @@ def iniciar(request):
             # obtener usuario con correo
 
             try:
-                usuario = Usuarios.objects.get(nombre_usuario=nombre_usuario)
+                usuario = Usuario.objects.get(nombre_usuario=nombre_usuario)
                 
-            except Usuarios.DoesNotExist:
+            except Usuario.DoesNotExist:
                 return render(request,'usuarios/iniciar.html',{
                     'formulario': formulario,
                     'mensaje_error': 'usuario o contraseña incorrecta' 
@@ -91,7 +91,7 @@ def eliminar(request):
         if formulario.is_valid():
             nombre_usuario = formulario.cleaned_data.get("nombre_usuario")
             contraseña = formulario.cleaned_data.get("contraseña")
-            usuario = Usuarios.objects.filter(nombre_usuario=nombre_usuario).first()
+            usuario = Usuario.objects.filter(nombre_usuario=nombre_usuario).first()
             print(usuario)
 
 

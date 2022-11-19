@@ -14,6 +14,33 @@
 </head>
 
 <body>
+    <nav class="bg-light border navbar navbar-expand-md navbar-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'vehiculos:index' %}"><span>Notitas</span></a>
+            <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+                data-bs-target="#navbar" data-bs-toggle="collapse" type="button">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar">
+
+
+        
+                <ul class="navbar-nav ms-auto mt-2">
+                    {% if request.session.id_usuario %}
+                    <span class="nav-link">{{ request.session.id_usuario }}</span>
+                    <div class="navbar-nav">
+                        <a href="{% url 'usuarios:cerrar' %}" class="nav-link">Cerrar sesión </a>
+                    {% else %}
+                        <a href="{% url 'usuarios:iniciar' %}" class="nav-link">Iniciar sesión </a>
+                        <a href="{% url 'usuarios:registro' %}" class="nav-link">Registrarse</a>
+                        <a href="{% url 'usuarios:eliminar' %}" class="nav-link">Eliminar usuario</a>
+                    {% endif %}
+
+                </ul>
+   
+            </div>
+        </div>
+    </nav>
     <div class="container">
         {% block contenido %}{% endblock contenido %}
     </div>

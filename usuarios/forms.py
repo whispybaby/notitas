@@ -1,11 +1,11 @@
 from django import forms
-from .models import Usuarios
+from .models import Usuario
 from django.forms import ModelForm, Form
 
 
 class UsuariosFormulario(ModelForm):
     class Meta:
-        model = Usuarios
+        model = Usuario
         exclude = ['hash_contraseña']
         widgets = {
             'nombre': forms.widgets.TextInput(

@@ -29,11 +29,11 @@
                     {% if request.session.id_usuario %}
                     <span class="nav-link">{{ request.session.id_usuario }}</span>
                     <div class="navbar-nav">
+                        <a href="{% url 'usuarios:eliminar' %}" class="nav-link">Eliminar usuario</a>
                         <a href="{% url 'usuarios:cerrar' %}" class="nav-link">Cerrar sesión </a>
                     {% else %}
                         <a href="{% url 'usuarios:iniciar' %}" class="nav-link">Iniciar sesión </a>
                         <a href="{% url 'usuarios:registro' %}" class="nav-link">Registrarse</a>
-                        <a href="{% url 'usuarios:eliminar' %}" class="nav-link">Eliminar usuario</a>
                     {% endif %}
 
                 </ul>

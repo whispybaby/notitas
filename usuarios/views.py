@@ -3,6 +3,7 @@ from usuarios.forms import UsuariosFormulario, RestablecerCuenta, IniciarSesion 
 from django.contrib.auth import login, logout, authenticate
 from django.urls import reverse
 import hashlib
+from notitas.helpers import inicio_obligatorio
 from usuarios.models import Usuario
 
 
@@ -18,7 +19,6 @@ def validar_hash(hash, contraseña):
         return True
     else:
         return False
-
 
 
 def registro(request):
@@ -37,7 +37,7 @@ def registro(request):
         'formulario': formulario
     })
 
-
+@inicio_obligatorio
 def recuperacion(request):
     formulario = RestablecerCuenta()
     return render(request, 'usuarios/recuperacion.html', {
@@ -67,7 +67,7 @@ def iniciar(request):
             if validar_hash(contraseñacifrada, contraseña):
                 request.session['id_usuario'] = usuario.nombre_usuario
                 print (request.session['id_usuario'])
-                return redirect (reverse ('usuarios:registro'))
+                return redirect (reverse ('vehiculos:index'))
                 
             
             else:
@@ -79,12 +79,12 @@ def iniciar(request):
     return render(request, 'usuarios/iniciar.html', {
     'formulario': formulario
     })
-
+@inicio_obligatorio
 def cerrar(request):
     print ('cerrando sesion')
     request.session['id_usuario'] = None
     return redirect(reverse('usuarios:iniciar'))
-    
+@inicio_obligatorio    
 def eliminar(request):
     if request.method == "POST":
         formulario = EliminarSesion(request.POST)

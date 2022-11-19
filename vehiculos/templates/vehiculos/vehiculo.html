@@ -6,7 +6,7 @@
 
 <h1>Mantenciones de {{ vehiculo.marca }} {{ vehiculo.modelo }}</h1>
 
-{% if vehiculo.mantenciones|length > 0 %}
+{% if vehiculo.mantenciones.all|length > 0 %}
 <h2>Hay mantenciones</h2>
 {% else %}
 

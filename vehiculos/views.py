@@ -3,6 +3,7 @@ from django.urls import reverse
 from vehiculos.forms import VehiculoFormulario
 from vehiculos.models import Vehiculo
 from notitas.helpers import inicio_obligatorio
+from usuarios.models import Usuario
 
 @inicio_obligatorio
 def index(request):
@@ -25,9 +26,11 @@ def vehiculo(request, id):
 def crear(request):
     if request.method == 'POST':
         formulario = VehiculoFormulario(request.POST)
-
         if formulario.is_valid():
-            formulario.save()
+            id_usuario = request.session['id_usuario'] 
+            vehiculo = formulario.save(commit=False)
+            vehiculo.usuario = Usuario.objects.get(id=id_usuario)
+            vehiculo.save()
             return redirect(reverse('vehiculos:index'))
         else:
             return render(request, 'vehiculos/crear.html', {

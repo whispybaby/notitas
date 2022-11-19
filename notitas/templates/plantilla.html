@@ -27,7 +27,7 @@
         
                 <ul class="navbar-nav ms-auto mt-2">
                     {% if request.session.id_usuario %}
-                    <span class="nav-link">{{ request.session.id_usuario }}</span>
+                    <span class="nav-link">{{ request.session.nombre_usuario }}</span>
                     <div class="navbar-nav">
                         <a href="{% url 'usuarios:eliminar' %}" class="nav-link">Eliminar usuario</a>
                         <a href="{% url 'usuarios:cerrar' %}" class="nav-link">Cerrar sesión </a>

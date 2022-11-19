@@ -65,7 +65,8 @@ def iniciar(request):
             contraseñacifrada = usuario.hash_contraseña
 
             if validar_hash(contraseñacifrada, contraseña):
-                request.session['id_usuario'] = usuario.nombre_usuario
+                request.session['id_usuario'] = usuario.id
+                request.session['nombre_usuario'] = usuario.nombre_usuario
                 print (request.session['id_usuario'])
                 return redirect (reverse ('vehiculos:index'))
                 
@@ -101,6 +102,7 @@ def eliminar(request):
                 request.session['id_usuario'] = usuario.nombre_usuario
                 print (request.session['id_usuario'])
                 usuario.delete()
+                request.session['nombre_usuario'] = None
                 request.session['id_usuario'] = None
                 return redirect(reverse('usuarios:iniciar'))
 

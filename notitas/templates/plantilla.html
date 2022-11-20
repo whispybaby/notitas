@@ -4,7 +4,6 @@
 <html lang="es">
 
 <head>
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,28 +19,32 @@
 <body>
     <nav class="bg-light border navbar navbar-expand-md navbar-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'vehiculos:index' %}"><span>Notitas 🌲 🎅🏻</span></a>
-            <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
-                data-bs-target="#navbar" data-bs-toggle="collapse" type="button">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbar">
+            <a class="navbar-brand" href="{% url 'vehiculos:index' %}"><span>Notitas</span></a>
 
-
-        
-                <ul class="navbar-nav ms-auto mt-2">
-                    {% if request.session.id_usuario %}
-                    <span class="nav-link">{{ request.session.nombre_usuario }}</span>
-                    <div class="navbar-nav">
-                        <a href="{% url 'usuarios:eliminar' %}" class="nav-link btn btn-danger text-white  mx-1" >Eliminar Cuenta</a>
-                        <a href="{% url 'usuarios:cerrar' %}" class="nav-link btn btn-danger text-white mx-1">Cerrar Sesión </a>
-                    {% else %}
-                        <a href="{% url 'usuarios:iniciar' %}" class="nav-link btn btn-success text-white mx-1">Iniciar Sesión </a>
-                        <a href="{% url 'usuarios:registro' %}" class="nav-link btn btn-success text-white mx-1">Registrarse</a>
-                    {% endif %}
-
+            <div class="dropdown">
+                {% if request.session.id_usuario %}
+                <button class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown">
+                    {{ request.session.nombre_usuario }}
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="{% url 'usuarios:cerrar' %}" class="dropdown-item">Cerrar sesión</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a href="{% url 'usuarios:eliminar' %}" class="dropdown-item">Eliminar cuenta</a></li>
                 </ul>
-   
+                {% else %}
+                <button class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown">
+                    Sin cuenta
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="{% url 'usuarios:iniciar' %}" class="dropdown-item">Iniciar sesión</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a href="{% url 'usuarios:registro' %}" class="dropdown-item">Registrarse</a></li>
+                </ul>
+                {% endif %}
             </div>
 
         </div>

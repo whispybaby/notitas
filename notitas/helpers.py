@@ -1,3 +1,4 @@
+import hashlib
 from functools import wraps
 from django.shortcuts import redirect
 
@@ -37,3 +38,26 @@ def validar_contraseña(contraseña):
         return False
 
     return True
+
+
+def iniciar_sesion(request, usuario):
+    request.session['id_usuario'] = usuario.id
+    request.session['nombre_usuario'] = usuario.nombre_usuario
+
+
+def cerrar_sesion(request):
+    request.session['id_usuario'] = None
+    request.session['nombre_usuario'] = None
+
+
+def crear_hash(contraseña):
+    temporal = bytes(contraseña, encoding='utf-8')
+    return hashlib.sha256(temporal).hexdigest()
+
+
+def validar_hash(hash, contraseña):
+    hash_temporal = crear_hash(contraseña)
+    if hash == hash_temporal:
+        return True
+    else:
+        return False

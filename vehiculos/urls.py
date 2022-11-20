@@ -6,9 +6,10 @@ app_name = 'vehiculos'
 urlpatterns = [
     path('', vehiculos.index, name='index'),
     path('crear/', vehiculos.crear, name='crear'),
-    path('<int:id>/', vehiculos.vehiculo, name='vehiculo'),
-    path('<int:id>/actualizar', vehiculos.actualizar, name='actualizar'),
-    path('<int:id>/eliminar', vehiculos.eliminar, name='eliminar'),
+    path('<int:id_vehiculo>/', vehiculos.vehiculo, name='vehiculo'),
+    path('<int:id_vehiculo>/actualizar',
+         vehiculos.actualizar, name='actualizar'),
+    path('<int:id_vehiculo>/eliminar', vehiculos.eliminar, name='eliminar'),
     path('<int:id_vehiculo>/mantenciones/registrar',
          mantenciones.registrar, name='crear_mantencion'),
     path('<int:id_vehiculo>/mantenciones/<int:id_mantencion>/actualizar',

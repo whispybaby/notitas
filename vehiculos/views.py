@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from vehiculos.forms import VehiculoFormulario
-from vehiculos.models import Vehiculo , DetalleMantencion
+from vehiculos.models import Vehiculo, DetalleMantencion
 from notitas.helpers import inicio_obligatorio
 from usuarios.models import Usuario
+
 
 @inicio_obligatorio
 def index(request):
@@ -12,28 +13,33 @@ def index(request):
         'vehiculos': vehiculos
     })
 
+
 @inicio_obligatorio
-def vehiculo(request, id):
+def vehiculo(request, id_vehiculo):
     try:
-        vehiculo = Vehiculo.objects.get(id=id, usuario=request.session['id_usuario'])
+        vehiculo = Vehiculo.objects.get(
+            id=id_vehiculo, usuario=request.session['id_usuario'])
         mantenciones = DetalleMantencion.objects.filter(vehiculo=vehiculo)
     except Vehiculo.DoesNotExist:
-        return redirect(reverse('vehiculos:vehiculo'))
+        return redirect(reverse('vehiculos:index'))
     return render(request, 'vehiculos/vehiculo.html', {
         'vehiculo': vehiculo,
         'mantenciones': mantenciones
     })
 
+
 @inicio_obligatorio
 def crear(request):
     if request.method == 'POST':
         formulario = VehiculoFormulario(request.POST)
+
         if formulario.is_valid():
-            id_usuario = request.session['id_usuario'] 
             vehiculo = formulario.save(commit=False)
-            vehiculo.usuario = Usuario.objects.get(id=id_usuario)
+            vehiculo.usuario = Usuario.objects.get(
+                id=request.session['id_usuario'])
             vehiculo.save()
             return redirect(reverse('vehiculos:index'))
+
         else:
             return render(request, 'vehiculos/crear.html', {
                 'formulario': formulario,
@@ -45,12 +51,15 @@ def crear(request):
         'operacion': 'Crear'
     })
 
+
 @inicio_obligatorio
-def actualizar(request, id):
+def actualizar(request, id_vehiculo):
     try:
-        vehiculo = Vehiculo.objects.get(id=id, usuario=request.session['id_usuario'])
+        vehiculo = Vehiculo.objects.get(
+            id=id_vehiculo, usuario=request.session['id_usuario'])
     except Vehiculo.DoesNotExist:
         return redirect(reverse('vehiculos:index'))
+
     if request.method == 'POST':
         formulario = VehiculoFormulario(request.POST, instance=vehiculo)
 
@@ -69,19 +78,18 @@ def actualizar(request, id):
     })
 
 
-
-
 @inicio_obligatorio
-def eliminar(request, id):
+def eliminar(request, id_vehiculo):
     try:
-        vehiculo = Vehiculo.objects.get(id=id, usuario=request.session['id_usuario'])
+        vehiculo = Vehiculo.objects.get(
+            id=id_vehiculo, usuario=request.session['id_usuario'])
     except Vehiculo.DoesNotExist:
         return redirect(reverse('vehiculos:index'))
+
     if request.method == 'POST':
         vehiculo.delete()
         return redirect(reverse('vehiculos:index'))
 
     return render(request, 'vehiculos/eliminar.html', {
-        'operacion': 'Eliminar',
         'vehiculo': vehiculo
     })

@@ -1,10 +1,12 @@
 {% extends 'plantilla.html' %}
 
+{% block titulo %}Usuarios{% endblock titulo %}
+
 {% block contenido %}
 
 <h1>Iniciar sesión 🧑🏻‍💻</h1>
 {% if mensaje_error %}
-{{ mensaje_error }}
+<p class="alert alert-danger">{{ mensaje_error }}</p>
 {% endif %}
 <form method="post">
     {% csrf_token %}

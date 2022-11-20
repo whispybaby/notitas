@@ -1,12 +1,11 @@
 {% extends 'plantilla.html' %}
 
-{% block titulo %}Vehiculos{% endblock titulo %}
+{% block titulo %}Vehículos{% endblock titulo %}
 
 {% block contenido %}
 
 <h1>Vehículos</h1>
-<a href="{% url 'vehiculos:crear' %}" class="btn btn-secondary"> Agregar vehiculo </a>
-{% if vehiculos %}
+<a href="{% url 'vehiculos:crear' %}" class="btn btn-secondary mb-3">Agregar vehículo</a>
 
 <div class="row gx-sm-3 gy-3">
     {% for vehiculo in vehiculos %}
@@ -36,11 +35,9 @@
             </div>
         </div>
     </div>
+    {% empty %}
+    <h3>No hay vehículos</h3>
     {% endfor %}
 </div>
-
-{% else %}
-<h3>No hay vehículos</h3>
-{% endif %}
 
 {% endblock contenido %}

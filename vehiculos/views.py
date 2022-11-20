@@ -15,7 +15,7 @@ def index(request):
 @inicio_obligatorio
 def vehiculo(request, id):
     try:
-        vehiculo = Vehiculo.objects.get(id=id)
+        vehiculo = Vehiculo.objects.get(id=id, usuario=request.session['id_usuario'])
         mantenciones = DetalleMantencion.objects.filter(vehiculo=vehiculo)
     except Vehiculo.DoesNotExist:
         return redirect(reverse('vehiculos:vehiculo'))
@@ -47,7 +47,10 @@ def crear(request):
 
 @inicio_obligatorio
 def actualizar(request, id):
-    vehiculo = Vehiculo.objects.get(id=id)
+    try:
+        vehiculo = Vehiculo.objects.get(id=id, usuario=request.session['id_usuario'])
+    except Vehiculo.DoesNotExist:
+        return redirect(reverse('vehiculos:index'))
     if request.method == 'POST':
         formulario = VehiculoFormulario(request.POST, instance=vehiculo)
 
@@ -67,7 +70,10 @@ def actualizar(request, id):
 
 @inicio_obligatorio
 def eliminar(request, id):
-    vehiculo = Vehiculo.objects.get(id=id)
+    try:
+        vehiculo = Vehiculo.objects.get(id=id, usuario=request.session['id_usuario'])
+    except Vehiculo.DoesNotExist:
+        return redirect(reverse('vehiculos:index'))
     if request.method == 'POST':
         vehiculo.delete()
         return redirect(reverse('vehiculos:index'))

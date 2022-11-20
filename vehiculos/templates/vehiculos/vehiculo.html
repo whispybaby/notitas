@@ -5,14 +5,44 @@
 {% block contenido %}
 
 <h1>Mantenciones de {{ vehiculo.marca }} {{ vehiculo.modelo }}</h1>
-
-{% if vehiculo.mantenciones.all|length > 0 %}
-<h2>Hay mantenciones</h2>
-{% else %}
-
-<h2>No hay mantenciones</h2>
-<a href="{% url 'vehiculos:crear_mantencion' vehiculo.id %}">Crear mantención</a>
-
-{% endif %}
+<a href="{% url 'vehiculos:crear_mantencion' vehiculo.id %}" class=" btn btn-secondary">Crear mantención</a>
+<div class="row gx-sm-3 gy-3">
+    {% for mantencion in mantenciones %}
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+        <div class="card">
+            <div class="card-body position-relative">
+                <div class="card-title">
+                    <h3>
+                        {{ mantencion.mantencion }} 
+                    </h3>
+                </div>
+                <div class="card-text">
+                    {{ mantencion.fecha  }} -
+                    {{ mantencion.kilometraje }}km
+                    
+                </div>
+                <div class="card-text">
+                    {{ mantencion.descripcion }}
+                </div>
+                <a href="{% url 'vehiculos:vehiculo' vehiculo.id %}" class="stretched-link"></a>
+            </div>
+            <div class="card-footer">
+                <div class="container">
+                    <div class="row justify-content-end">
+                        <div class="col-auto">
+                            <a href="{% url 'vehiculos:actualizar' vehiculo.id %}"
+                                class="text-decoration-none btn btn-success card-link">⟳</a>
+                        </div>
+                        <div class="col-auto">
+                            <a href="{% url 'vehiculos:eliminar_mantencion' vehiculo.id mantencion.id %}"
+                                class="text-decoration-none btn btn-danger card-link">X</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 
 {% endblock contenido %}

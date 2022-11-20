@@ -29,11 +29,11 @@
                     {% if request.session.id_usuario %}
                     <span class="nav-link">{{ request.session.nombre_usuario }}</span>
                     <div class="navbar-nav">
-                        <a href="{% url 'usuarios:eliminar' %}" class="nav-link">Eliminar usuario</a>
-                        <a href="{% url 'usuarios:cerrar' %}" class="nav-link">Cerrar sesión </a>
+                        <a href="{% url 'usuarios:eliminar' %}" class="nav-link btn btn-danger text-white  mx-1" >Eliminar Cuenta</a>
+                        <a href="{% url 'usuarios:cerrar' %}" class="nav-link btn btn-danger text-white mx-1">Cerrar Sesión </a>
                     {% else %}
-                        <a href="{% url 'usuarios:iniciar' %}" class="nav-link">Iniciar sesión </a>
-                        <a href="{% url 'usuarios:registro' %}" class="nav-link">Registrarse</a>
+                        <a href="{% url 'usuarios:iniciar' %}" class="nav-link btn btn-success text-white mx-1">Iniciar Sesión </a>
+                        <a href="{% url 'usuarios:registro' %}" class="nav-link btn btn-success text-white mx-1">Registrarse</a>
                     {% endif %}
 
                 </ul>

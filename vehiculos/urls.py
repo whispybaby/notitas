@@ -13,5 +13,5 @@ urlpatterns = [
          mantenciones.registrar, name='crear_mantencion'),
     # path('<int:id_vehiculo>/mantenciones/<int:id_mantencion>/'),
     # path('<int:id_vehiculo>/mantenciones/<int:id_mantencion>/actualizar'),
-    # path('<int:id_vehiculo>/mantenciones/<int:id_mantencion>/eliminar'),
+    path('<int:id_vehiculo>/mantenciones/<int:id_mantencion>/eliminar' ,mantenciones.eliminar, name='eliminar_mantencion'),
 ]

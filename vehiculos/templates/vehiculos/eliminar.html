@@ -6,6 +6,6 @@
 <h1>¿Borrar {{ vehiculo.marca }} {{ vehiculo.modelo }}?</h1>
 <form method="post">
     {% csrf_token %}
-    <input type="submit" value="Eliminar" class="btn btn-primary">
+    <input type="submit" value="Eliminar" class="btn btn-danger">
 </form>
 {% endblock contenido %}

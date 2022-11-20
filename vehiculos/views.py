@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from vehiculos.forms import VehiculoFormulario
-from vehiculos.models import Vehiculo
+from vehiculos.models import Vehiculo , DetalleMantencion
 from notitas.helpers import inicio_obligatorio
 from usuarios.models import Usuario
 
@@ -16,10 +16,12 @@ def index(request):
 def vehiculo(request, id):
     try:
         vehiculo = Vehiculo.objects.get(id=id)
+        mantenciones = DetalleMantencion.objects.filter(vehiculo=vehiculo)
     except Vehiculo.DoesNotExist:
-        return redirect(reverse('vehiculos:index'))
+        return redirect(reverse('vehiculos:vehiculo'))
     return render(request, 'vehiculos/vehiculo.html', {
-        'vehiculo': vehiculo
+        'vehiculo': vehiculo,
+        'mantenciones': mantenciones
     })
 
 @inicio_obligatorio

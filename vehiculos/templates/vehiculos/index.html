@@ -5,6 +5,7 @@
 {% block contenido %}
 
 <h1>Vehículos</h1>
+<a href="{% url 'vehiculos:crear' %}" class="btn btn-secondary"> Agregar vehiculo </a>
 {% if vehiculos %}
 
 <div class="row gx-sm-3 gy-3">
@@ -27,11 +28,11 @@
                     <div class="row justify-content-end">
                         <div class="col-auto">
                             <a href="{% url 'vehiculos:actualizar' vehiculo.id %}"
-                                class="text-decoration-none btn btn-primary card-link">⟳</a>
+                                class="text-decoration-none btn btn-success card-link">⟳</a>
                         </div>
                         <div class="col-auto">
                             <a href="{% url 'vehiculos:eliminar' vehiculo.id %}"
-                                class="text-decoration-none btn btn-primary card-link">X</a>
+                                class="text-decoration-none btn btn-danger card-link">X</a>
                         </div>
                     </div>
                 </div>

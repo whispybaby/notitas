@@ -11,7 +11,8 @@ urlpatterns = [
     path('<int:id>/eliminar', vehiculos.eliminar, name='eliminar'),
     path('<int:id_vehiculo>/mantenciones/registrar',
          mantenciones.registrar, name='crear_mantencion'),
-    # path('<int:id_vehiculo>/mantenciones/<int:id_mantencion>/'),
-    # path('<int:id_vehiculo>/mantenciones/<int:id_mantencion>/actualizar'),
-    path('<int:id_vehiculo>/mantenciones/<int:id_mantencion>/eliminar' ,mantenciones.eliminar, name='eliminar_mantencion'),
+    path('<int:id_vehiculo>/mantenciones/<int:id_mantencion>/actualizar',
+         mantenciones.actualizar, name='actualizar_mantencion'),
+    path('<int:id_vehiculo>/mantenciones/<int:id_mantencion>/eliminar',
+         mantenciones.eliminar, name='eliminar_mantencion'),
 ]

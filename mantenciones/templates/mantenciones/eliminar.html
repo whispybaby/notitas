@@ -2,7 +2,7 @@
 {% block titulo %}Mantenciones{% endblock titulo %}
 
 {% block contenido %}
-<h1>¿Borrar {{ matenciones.marca }} {{ mantenciones.modelo }}?</h1>
+<h1>¿Borrar {{ mantenciones.marca }} {{ mantenciones.modelo }}?</h1>
 <form method="post">
     {% csrf_token %}
     <input type="submit" value="Eliminar" class="btn btn-danger">

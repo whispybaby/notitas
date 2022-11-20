@@ -68,6 +68,9 @@ def actualizar(request, id):
         'operacion': 'Actualizar'
     })
 
+
+
+
 @inicio_obligatorio
 def eliminar(request, id):
     try:

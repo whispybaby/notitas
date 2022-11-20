@@ -7,7 +7,7 @@ from usuarios.models import Usuario
 
 @inicio_obligatorio
 def index(request):
-    vehiculos = Vehiculo.objects.all()
+    vehiculos = Vehiculo.objects.filter(usuario=request.session['id_usuario'])
     return render(request, 'vehiculos/index.html', {
         'vehiculos': vehiculos
     })

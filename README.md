@@ -15,7 +15,7 @@
  olvidar es por ello que para solucionar esta problematica lo mejor es  simplificar todo estos servicios y solucionandolo desarollando 
  un sistema que se encargara de   dejar registro de todos los servicios mecanicos que se llevan a cabo es decir cada vez que un usuario se 
  registra podra registrar su vehiculo para asi poder dejar los registros de la ultima fecha en la que realizo sus mantenciones y miro su kilometraje
- para asi siempre llevar un registro de el matenimiento que lleva echo asociado a su vehiculo 
+ para asi siempre llevar un registro de el mantenimiento que lleva echo asociado a su vehiculo 
  y su cuenta
 <h1 align="center">🍙 Usuarios</h1>
 <div align="center">
@@ -28,16 +28,16 @@
   Como funciona el proceso del registro de los usuarios es sumamente intuitivo un usuario debera simplemente registrarse y completar todo el formulario
   de una manera correcta es decir escribiendo todo el formato en que se deberia y cumpliedo todos los fomularios incluso en el formato que se deberia
   ya que el formulario tiene restricciones y si no las completa correctamente no se podra registrar hasta que las complete. Todo estos servicios iran 
-  conectados a una base de datos la cual estara gestionada mediante linode para asi despues poder posteriormente inciar seccion y dejar los datos 
+  conectados a una base de datos la cual estara gestionada mediante linode para asi despues poder posteriormente inciar sesión y dejar los datos 
   registados dentro de la base de datos
   
-## Inicio de seccion
-   El inicio de seccion se realiza mediante un proceso de validacion de los datos sera validadndo si el usuario existe y si los datos que esta ingresado
-   para inciar seccion son validos o no. Si estos son validos podra ingresar seccion y de lo contrario no se podra iniciar seccion y para recuperar su cuenta
+## Inicio de sesión
+   El inicio de sesión se realiza mediante un proceso de validacion de los datos sera validadndo si el usuario existe y si los datos que esta ingresado
+   para inciar sesión son validos o no. Si estos son validos podra ingresar sesión y de lo contrario no se podra iniciar sesión y para recuperar su cuenta
    debera hablar con un administrador.
  
  ## Eliminacion de la cuenta❌
-   ⚠️La eliminacion de la cuenta y la vista de esta paguina  solo se podra visualizar una vez iniciada la seccion.Para poder eliminar la cuenta debe iniciar seccion y validar 
+   ⚠️La eliminacion de la cuenta y la vista de esta paguina  solo se podra visualizar una vez iniciada la sesión.Para poder eliminar la cuenta debe iniciar sesión y validar 
    que quiere eliminarla.
 
 <h1 align="center">Vehiculos🚙</h1>

@@ -1,10 +1,13 @@
 {% extends 'plantilla.html' %}
+
 {% block titulo %}Mantenciones{% endblock titulo %}
 
 {% block contenido %}
-<h1>¿Borrar {{ mantenciones.marca }} {{ mantenciones.modelo }}?</h1>
+
+<h1>¿Borrar {{ mantencion.mantencion }}?</h1>
 <form method="post">
     {% csrf_token %}
-    <input type="submit" value="Eliminar" class="btn btn-danger">
+    <input type="submit" value="Eliminar mantención" class="btn btn-danger mt-3">
 </form>
+
 {% endblock contenido %}

@@ -3,10 +3,12 @@
 {% block titulo %}Mantenciones{% endblock titulo %}
 
 {% block contenido %}
+
 <h1>{{ operacion }} mantención</h1>
 <form method="post">
     {% csrf_token %}
     {{ formulario }}
-    <input type="submit" class="btn btn-secondary">
+    <input type="submit" class="btn btn-secondary mt-3" value="Guardar mantención">
 </form>
+
 {% endblock contenido %}

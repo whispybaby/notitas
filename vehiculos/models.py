@@ -67,9 +67,8 @@ class Vehiculo(models.Model):
 class DetalleMantencion(models.Model):
     mantencion = models.ForeignKey(Mantencion, on_delete=models.RESTRICT)
     vehiculo = models.ForeignKey(Vehiculo, on_delete=models.CASCADE)
-    precio = models.IntegerField()
     fecha = models.DateField()
-    kilometraje = models.IntegerField()
+    kilometraje = models.PositiveIntegerField()
     descripcion = models.CharField(max_length=100, blank=True)
 
     class Meta:

@@ -64,7 +64,7 @@
    <img src="https://i.pinimg.com/originals/e1/f0/53/e1f053aa268dcb381ffbc1c82c927e0d.gif"  width="10px" height="10px"> Se debe tener en condideracion que si
     el usuario no inicia sesión no podra entrar a esta vista asi que le redireccionara a la paguina de inicio
 
-<h1 align="center">Manteciones🔩</h1>
+<h1 align="center">Mantenciones🔩</h1>
 <div align="center">
     <img src="https://i.pinimg.com/originals/6d/8f/42/6d8f4254e8f50c2d45a81d9335a2906c.gif">
 </div>

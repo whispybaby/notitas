@@ -7,6 +7,23 @@
 <h1>Vehículos</h1>
 <a href="{% url 'vehiculos:crear' %}" class="btn btn-secondary mb-3">Agregar vehículo</a>
 
+<div class="mb-3">
+    <form method="get" class="row">
+        <div class="col-4">
+            {{ formulario.marca }}
+        </div>
+        <div class="col-4">
+            {{ formulario.año }}
+        </div>
+        <div class="col-2">
+            <input type="submit" class="form-control" value="🔍">
+        </div>
+        <div class="col-2 text-center">
+            <a href="{% url 'vehiculos:index' %}" class="form-control text-decoration-none">❌</a>
+        </div>
+    </form>
+</div>
+
 <div class="row gx-sm-3 gy-3">
     {% for vehiculo in vehiculos %}
     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
@@ -14,7 +31,7 @@
             <div class="card-body position-relative">
                 <div class="card-title">
                     <h3>
-                        {{ vehiculo.marca }} {{ vehiculo.modelo }}
+                        {{ vehiculo.marca }} {{ vehiculo.modelo }} ({{ vehiculo.año }})
                     </h3>
                 </div>
                 <a href="{% url 'vehiculos:vehiculo' vehiculo.id %}" class="stretched-link"></a>

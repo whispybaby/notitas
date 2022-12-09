@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from vehiculos.forms import VehiculoFormulario
+from vehiculos.forms import VehiculoFormulario, FiltrarVehiculosFormulario
 from vehiculos.models import Vehiculo, DetalleMantencion
 from notitas.helpers import inicio_obligatorio
 from usuarios.models import Usuario
@@ -8,9 +8,22 @@ from usuarios.models import Usuario
 
 @inicio_obligatorio
 def index(request):
-    vehiculos = Vehiculo.objects.filter(usuario=request.session['id_usuario'])
+    formulario = FiltrarVehiculosFormulario(request.GET)
+    marca = request.GET.get('marca', None)
+    año = request.GET.get('año', None)
+
+    if marca and año:
+        vehiculos = Vehiculo.objects.filter(usuario=request.session['id_usuario'], marca=marca, año=año)
+    elif marca:
+        vehiculos = Vehiculo.objects.filter(usuario=request.session['id_usuario'], marca=marca)
+    elif año:
+        vehiculos = Vehiculo.objects.filter(usuario=request.session['id_usuario'], año=año)
+    else:
+        vehiculos = Vehiculo.objects.filter(usuario=request.session['id_usuario'])
+
     return render(request, 'vehiculos/index.html', {
-        'vehiculos': vehiculos
+        'vehiculos': vehiculos,
+        'formulario': formulario
     })
 
 

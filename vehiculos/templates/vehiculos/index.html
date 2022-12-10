@@ -9,17 +9,20 @@
 
 <div class="mb-3">
     <form method="get" class="row">
-        <div class="col-6 col-sm-4 col-md-4 my-2">
+        <div class="col-6 col-sm-3 col-md-3 my-2">
             {{ formulario.marca }}
         </div>
-        <div class="col-6 col-sm-4 col-md-4 my-2">
+        <div class="col-6 col-sm-3 col-md-3 my-2">
             {{ formulario.año }}
         </div>
-        <div class="col-6 col-sm-2 col-md-2 my-2">
+        <div class="col-4 col-sm-2 col-md-2 my-2">
             <input type="submit" class="form-control" value="🔍">
         </div>
-        <div class="col-6 col-sm-2 col-md-2 text-center my-2">
+        <div class="col-4 col-sm-2 col-md-2 text-center my-2">
             <a href="{% url 'vehiculos:index' %}" class="form-control text-decoration-none">❌</a>
+        </div>
+        <div class="col-4 col-sm-2 col-md-2 text-center my-2">
+            <input type="button" value="💾" class="form-control" onclick="exportar_vehiculos()">
         </div>
     </form>
 </div>
@@ -56,5 +59,17 @@
     <h3>No hay vehículos</h3>
     {% endfor %}
 </div>
+
+<script>
+    const exportar_vehiculos = () => {
+        const path = `{% url 'vehiculos:exportar_vehiculos' %}`
+        const marca = encodeURIComponent('{{ request.GET.marca }}')
+        const año = encodeURIComponent('{{ request.GET.año }}')
+        const meta = `?marca=${marca}&año=${año}`
+        const url = path + meta
+
+        open(url, '_self')
+    }
+</script>
 
 {% endblock contenido %}

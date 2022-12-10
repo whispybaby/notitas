@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.http import HttpResponse
 from vehiculos.forms import VehiculoFormulario, FiltrarVehiculosFormulario
 from vehiculos.models import Vehiculo, DetalleMantencion
 from notitas.helpers import inicio_obligatorio
@@ -13,18 +14,63 @@ def index(request):
     año = request.GET.get('año', None)
 
     if marca and año:
-        vehiculos = Vehiculo.objects.filter(usuario=request.session['id_usuario'], marca=marca, año=año)
+        vehiculos = Vehiculo.objects.filter(
+            usuario=request.session['id_usuario'], marca=marca, año=año)
     elif marca:
-        vehiculos = Vehiculo.objects.filter(usuario=request.session['id_usuario'], marca=marca)
+        vehiculos = Vehiculo.objects.filter(
+            usuario=request.session['id_usuario'], marca=marca)
     elif año:
-        vehiculos = Vehiculo.objects.filter(usuario=request.session['id_usuario'], año=año)
+        vehiculos = Vehiculo.objects.filter(
+            usuario=request.session['id_usuario'], año=año)
     else:
-        vehiculos = Vehiculo.objects.filter(usuario=request.session['id_usuario'])
+        vehiculos = Vehiculo.objects.filter(
+            usuario=request.session['id_usuario'])
 
     return render(request, 'vehiculos/index.html', {
         'vehiculos': vehiculos,
         'formulario': formulario
     })
+
+
+@inicio_obligatorio
+def exportar_vehiculos(request):
+    import xlwt
+
+    marca = request.GET.get('marca', None)
+    año = request.GET.get('año', None)
+
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=vehiculos.xls'
+
+    if marca and año:
+        vehiculos = Vehiculo.objects.filter(
+            usuario=request.session['id_usuario'], marca=marca, año=año)
+    elif marca:
+        vehiculos = Vehiculo.objects.filter(
+            usuario=request.session['id_usuario'], marca=marca)
+    elif año:
+        vehiculos = Vehiculo.objects.filter(
+            usuario=request.session['id_usuario'], año=año)
+    else:
+        vehiculos = Vehiculo.objects.filter(
+            usuario=request.session['id_usuario'])
+
+    archivo = xlwt.Workbook(encoding='utf-8')
+    hoja = archivo.add_sheet('Vehiculos')
+
+    columnas = ['Marca', 'Modelo', 'Año']
+
+    for i, columna in enumerate(columnas, 0):
+        hoja.write(0, i, columna)
+
+    for i, vehiculo in enumerate(vehiculos, 1):
+        hoja.write(i, 0, str(vehiculo.marca))
+        hoja.write(i, 1, str(vehiculo.modelo))
+        hoja.write(i, 2, str(vehiculo.año))
+
+    archivo.save(response)
+
+    return response
 
 
 @inicio_obligatorio

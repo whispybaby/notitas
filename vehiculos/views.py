@@ -37,7 +37,7 @@ def exportar_vehiculos(request):
     marca = request.GET.get('marca', None)
     año = request.GET.get('año', None)
 
-    formatos = ['excel', 'csv']
+    formatos = ['excel', 'csv', 'json']
     formato = request.GET.get('formato', None)
 
     if formato not in formatos:
@@ -85,6 +85,21 @@ def exportar_vehiculos(request):
         writer.writerow(['Marca', 'Modelo', 'Año'])
         for vehiculo in vehiculos:
             writer.writerow([vehiculo.marca, vehiculo.modelo, vehiculo.año])
+
+    elif formato == 'json':
+        import json
+        response = HttpResponse(content_type='application/json')
+        response['Content-Disposition'] = 'attachment; filename=vehiculos.json'
+
+        vehiculos_json = []
+        for vehiculo in vehiculos:
+            vehiculos_json.append({
+                'marca': str(vehiculo.marca),
+                'modelo': str(vehiculo.modelo),
+                'año': str(vehiculo.año)
+            })
+
+        response.write(json.dumps(vehiculos_json))
 
     return response
 

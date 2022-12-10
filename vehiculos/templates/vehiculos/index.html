@@ -30,6 +30,9 @@
                 <li>
                     <input type="button" value="Csv" class="dropdown-item" id="csv">
                 </li>
+                <li>
+                    <input type="button" value="Json" class="dropdown-item" id="json">
+                </li>
             </ul>
         </div>
     </form>
@@ -81,9 +84,11 @@
 
     const excel = document.getElementById('excel')
     const csv = document.getElementById('csv')
+    const json = document.getElementById('json')
 
     excel.addEventListener('click', () => exportar_vehiculos('excel'))
     csv.addEventListener('click', () => exportar_vehiculos('csv'))
+    json.addEventListener('click', () => exportar_vehiculos('json'))
 </script>
 
 {% endblock contenido %}

@@ -21,8 +21,16 @@
         <div class="col-4 col-sm-2 col-md-2 text-center my-2">
             <a href="{% url 'vehiculos:index' %}" class="form-control text-decoration-none">❌</a>
         </div>
-        <div class="col-4 col-sm-2 col-md-2 text-center my-2">
-            <input type="button" value="💾" class="form-control" onclick="exportar_vehiculos()">
+        <div class="col-4 col-sm-2 col-md-2 text-center my-2 dropdown">
+            <button class="dropdown-toggle form-control" data-bs-toggle="dropdown">💾</button>
+            <ul class="dropdown-menu">
+                <li>
+                    <input type="button" value="Excel" class="dropdown-item" id="excel">
+                </li>
+                <li>
+                    <input type="button" value="Csv" class="dropdown-item" id="csv">
+                </li>
+            </ul>
         </div>
     </form>
 </div>
@@ -61,15 +69,21 @@
 </div>
 
 <script>
-    const exportar_vehiculos = () => {
+    const exportar_vehiculos = (formato) => {
         const path = `{% url 'vehiculos:exportar_vehiculos' %}`
         const marca = encodeURIComponent('{{ request.GET.marca }}')
         const año = encodeURIComponent('{{ request.GET.año }}')
-        const meta = `?marca=${marca}&año=${año}`
+        const meta = `?marca=${marca}&año=${año}&formato=${formato}`
         const url = path + meta
 
         open(url, '_self')
     }
+
+    const excel = document.getElementById('excel')
+    const csv = document.getElementById('csv')
+
+    excel.addEventListener('click', () => exportar_vehiculos('excel'))
+    csv.addEventListener('click', () => exportar_vehiculos('csv'))
 </script>
 
 {% endblock contenido %}

@@ -34,13 +34,14 @@ def index(request):
 
 @inicio_obligatorio
 def exportar_vehiculos(request):
-    import xlwt
-
     marca = request.GET.get('marca', None)
     año = request.GET.get('año', None)
 
-    response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = 'attachment; filename=vehiculos.xls'
+    formatos = ['excel', 'csv']
+    formato = request.GET.get('formato', None)
+
+    if formato not in formatos:
+        formato = 'excel'
 
     if marca and año:
         vehiculos = Vehiculo.objects.filter(
@@ -55,20 +56,35 @@ def exportar_vehiculos(request):
         vehiculos = Vehiculo.objects.filter(
             usuario=request.session['id_usuario'])
 
-    archivo = xlwt.Workbook(encoding='utf-8')
-    hoja = archivo.add_sheet('Vehiculos')
+    if formato == 'excel':
+        import xlwt
+        response = HttpResponse(content_type='application/ms-excel')
+        response['Content-Disposition'] = 'attachment; filename=vehiculos.xls'
 
-    columnas = ['Marca', 'Modelo', 'Año']
+        archivo = xlwt.Workbook(encoding='utf-8')
+        hoja = archivo.add_sheet('Vehiculos')
 
-    for i, columna in enumerate(columnas, 0):
-        hoja.write(0, i, columna)
+        columnas = ['Marca', 'Modelo', 'Año']
 
-    for i, vehiculo in enumerate(vehiculos, 1):
-        hoja.write(i, 0, str(vehiculo.marca))
-        hoja.write(i, 1, str(vehiculo.modelo))
-        hoja.write(i, 2, str(vehiculo.año))
+        for i, columna in enumerate(columnas, 0):
+            hoja.write(0, i, columna)
 
-    archivo.save(response)
+        for i, vehiculo in enumerate(vehiculos, 1):
+            hoja.write(i, 0, str(vehiculo.marca))
+            hoja.write(i, 1, str(vehiculo.modelo))
+            hoja.write(i, 2, str(vehiculo.año))
+
+        archivo.save(response)
+
+    elif formato == 'csv':
+        import csv
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename=vehiculos.csv'
+
+        writer = csv.writer(response)
+        writer.writerow(['Marca', 'Modelo', 'Año'])
+        for vehiculo in vehiculos:
+            writer.writerow([vehiculo.marca, vehiculo.modelo, vehiculo.año])
 
     return response
 

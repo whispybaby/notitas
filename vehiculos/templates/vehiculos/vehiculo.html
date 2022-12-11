@@ -17,11 +17,11 @@
       {{formulario.fecha_final}}
     </div>
     <div class="col-1">
-      <input class="form-control btn btn-secondary" type="submit">
+      <input class="form-control btn btn-secondary" type="submit" value="🗳">
     </div>
 
     <div class="col-1">
-      <a href="{% url 'vehiculos:vehiculo' vehiculo.id %}" class="form-control btn btn-secondary">🐎</a>
+      <a href="{% url 'vehiculos:vehiculo' vehiculo.id %}" class="form-control btn btn-secondary">🗘</a>
 
     </div>
     <div class="col-3 dropdown">
@@ -75,16 +75,13 @@
           <div class="row justify-content-end">
             <div class="col-auto">
               <a href="{% url 'vehiculos:actualizar_mantencion' vehiculo.id  mantencion.id%}"
-                class="text-decoration-none btn btn-success card-link">⟳</a>
+                class="text-decoration-none btn btn-success card-link">⟲</a>
             </div>
             <div class="col-auto">
               <a href="{% url 'vehiculos:eliminar_mantencion' vehiculo.id mantencion.id %}"
                 class="text-decoration-none btn btn-danger card-link">X</a>
             </div>
-            <div class="col-auto">
-              <a href="{% url 'vehiculos:exportar_mantenciones' vehiculo.id  %}"
-                class="text-decoration-none btn btn-secondary card-link">X</a>
-            </div>
+          
           </div>
         </div>
       </div>

@@ -6,9 +6,9 @@
 
 <h1>{{ operacion }} vehículo</h1>
 <form method="post">
-    {% csrf_token %}
-    {{ formulario }}
-    <input type="submit" class="btn btn-secondary mt-3" value="Guardar vehículo">
+  {% csrf_token %}
+  {{ formulario }}
+  <input type="submit" class="btn btn-secondary mt-3" value="Guardar vehículo">
 </form>
 
 {% endblock contenido %}

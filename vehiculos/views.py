@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from vehiculos.forms import VehiculoFormulario, FiltrarMantencionesFormulario
+from django.http import HttpResponse
+from vehiculos.forms import VehiculoFormulario, FiltrarVehiculosFormulario, FiltrarMantencionesFormulario
 from vehiculos.models import Vehiculo, DetalleMantencion
 from notitas.helpers import inicio_obligatorio
 from usuarios.models import Usuario
@@ -14,10 +15,111 @@ from reportlab.pdfgen import canvas
 
 @inicio_obligatorio
 def index(request):
-    vehiculos = Vehiculo.objects.filter(usuario=request.session['id_usuario'])
+    formulario = FiltrarVehiculosFormulario(request.GET)
+    marca = request.GET.get('marca', None)
+    año = request.GET.get('año', None)
+
+    if marca and not marca.isdigit():
+        marca = None
+
+    if año and not año.isdigit():
+        año = None
+
+    if marca and año:
+        vehiculos = Vehiculo.objects.filter(
+            usuario=request.session['id_usuario'], marca=marca, año=año)
+    elif marca:
+        vehiculos = Vehiculo.objects.filter(
+            usuario=request.session['id_usuario'], marca=marca)
+    elif año:
+        vehiculos = Vehiculo.objects.filter(
+            usuario=request.session['id_usuario'], año=año)
+    else:
+        vehiculos = Vehiculo.objects.filter(
+            usuario=request.session['id_usuario'])
+
     return render(request, 'vehiculos/index.html', {
-        'vehiculos': vehiculos
+        'vehiculos': vehiculos,
+        'formulario': formulario
     })
+
+
+@inicio_obligatorio
+def exportar_vehiculos(request):
+    marca = request.GET.get('marca', None)
+    año = request.GET.get('año', None)
+
+    if marca and not marca.isdigit():
+        marca = None
+
+    if año and not año.isdigit():
+        año = None
+
+    formatos = ['excel', 'csv', 'yml']
+    formato = request.GET.get('formato', None)
+
+    if formato not in formatos:
+        formato = 'excel'
+
+    if marca and año:
+        vehiculos = Vehiculo.objects.filter(
+            usuario=request.session['id_usuario'], marca=marca, año=año)
+    elif marca:
+        vehiculos = Vehiculo.objects.filter(
+            usuario=request.session['id_usuario'], marca=marca)
+    elif año:
+        vehiculos = Vehiculo.objects.filter(
+            usuario=request.session['id_usuario'], año=año)
+    else:
+        vehiculos = Vehiculo.objects.filter(
+            usuario=request.session['id_usuario'])
+
+    if formato == 'excel':
+        import xlwt
+        response = HttpResponse(content_type='application/ms-excel')
+        response['Content-Disposition'] = 'attachment; filename=vehiculos.xls'
+
+        archivo = xlwt.Workbook(encoding='utf-8')
+        hoja = archivo.add_sheet('Vehiculos')
+
+        columnas = ['Marca', 'Modelo', 'Año']
+
+        for i, columna in enumerate(columnas, 0):
+            hoja.write(0, i, columna)
+
+        for i, vehiculo in enumerate(vehiculos, 1):
+            hoja.write(i, 0, str(vehiculo.marca))
+            hoja.write(i, 1, str(vehiculo.modelo))
+            hoja.write(i, 2, str(vehiculo.año))
+
+        archivo.save(response)
+
+    elif formato == 'csv':
+        import csv
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename=vehiculos.csv'
+
+        writer = csv.writer(response)
+        writer.writerow(['Marca', 'Modelo', 'Año'])
+        for vehiculo in vehiculos:
+            writer.writerow([vehiculo.marca, vehiculo.modelo, vehiculo.año])
+
+    elif formato == 'yml':
+        import yaml
+        response = HttpResponse(content_type='text/yaml')
+        response['Content-Disposition'] = 'attachment; filename=vehiculos.yml'
+
+        vehiculos_yml = []
+        for vehiculo in vehiculos:
+            vehiculos_yml.append({
+                'marca': str(vehiculo.marca),
+                'modelo': str(vehiculo.modelo),
+                'año': str(vehiculo.año)
+            })
+
+        response.write(yaml.dump(vehiculos_yml))
+
+    return response
 
 
 @inicio_obligatorio

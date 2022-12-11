@@ -7,37 +7,88 @@
 <h1>Vehículos</h1>
 <a href="{% url 'vehiculos:crear' %}" class="btn btn-secondary mb-3">Agregar vehículo</a>
 
-<div class="row gx-sm-3 gy-3">
-  {% for vehiculo in vehiculos %}
-  <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-    <div class="card">
-      <div class="card-body position-relative">
-        <div class="card-title">
-          <h3>
-            {{ vehiculo.marca }} {{ vehiculo.modelo }}
-          </h3>
+<div class="mb-3">
+    <form method="get" class="row">
+        <div class="col-6 col-sm-3 col-md-3 my-2">
+            {{ formulario.marca }}
         </div>
-        <a href="{% url 'vehiculos:vehiculo' vehiculo.id %}" class="stretched-link"></a>
-      </div>
-      <div class="card-footer">
-        <div class="container">
-          <div class="row justify-content-end">
-            <div class="col-auto">
-              <a href="{% url 'vehiculos:actualizar' vehiculo.id %}"
-                class="text-decoration-none btn btn-success card-link">⟳</a>
-            </div>
-            <div class="col-auto">
-              <a href="{% url 'vehiculos:eliminar' vehiculo.id %}"
-                class="text-decoration-none btn btn-danger card-link">X</a>
-            </div>
-          </div>
+        <div class="col-6 col-sm-3 col-md-3 my-2">
+            {{ formulario.año }}
         </div>
-      </div>
-    </div>
-  </div>
-  {% empty %}
-  <h3>No hay vehículos</h3>
-  {% endfor %}
+        <div class="col-4 col-sm-2 col-md-2 my-2">
+            <input type="submit" class="form-control" value="🔍">
+        </div>
+        <div class="col-4 col-sm-2 col-md-2 text-center my-2">
+            <a href="{% url 'vehiculos:index' %}" class="form-control text-decoration-none">❌</a>
+        </div>
+        <div class="col-4 col-sm-2 col-md-2 text-center my-2 dropdown">
+            <button class="dropdown-toggle form-control" data-bs-toggle="dropdown">💾</button>
+            <ul class="dropdown-menu">
+                <li>
+                    <input type="button" value="Excel" class="dropdown-item" id="excel">
+                </li>
+                <li>
+                    <input type="button" value="Csv" class="dropdown-item" id="csv">
+                </li>
+                <li>
+                    <input type="button" value="Yml" class="dropdown-item" id="yml">
+                </li>
+            </ul>
+        </div>
+    </form>
 </div>
+
+<div class="row gx-sm-3 gy-3">
+    {% for vehiculo in vehiculos %}
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+        <div class="card">
+            <div class="card-body position-relative">
+                <div class="card-title">
+                    <h3>
+                        {{ vehiculo.marca }} {{ vehiculo.modelo }} ({{ vehiculo.año }})
+                    </h3>
+                </div>
+                <a href="{% url 'vehiculos:vehiculo' vehiculo.id %}" class="stretched-link"></a>
+            </div>
+            <div class="card-footer">
+                <div class="container">
+                    <div class="row justify-content-end">
+                        <div class="col-auto">
+                            <a href="{% url 'vehiculos:actualizar' vehiculo.id %}"
+                                class="text-decoration-none btn btn-success card-link">🗘</a>
+                        </div>
+                        <div class="col-auto">
+                            <a href="{% url 'vehiculos:eliminar' vehiculo.id %}"
+                                class="text-decoration-none btn btn-danger card-link">X</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <h3>No hay vehículos</h3>
+    {% endfor %}
+</div>
+
+<script>
+    const exportar_vehiculos = (formato) => {
+        const path = `{% url 'vehiculos:exportar_vehiculos' %}`
+        const marca = encodeURIComponent('{{ request.GET.marca }}')
+        const año = encodeURIComponent('{{ request.GET.año }}')
+        const meta = `?marca=${marca}&año=${año}&formato=${formato}`
+        const url = path + meta
+
+        open(url, '_self')
+    }
+
+    const excel = document.getElementById('excel')
+    const csv = document.getElementById('csv')
+    const yml = document.getElementById('yml')
+
+    excel.addEventListener('click', () => exportar_vehiculos('excel'))
+    csv.addEventListener('click', () => exportar_vehiculos('csv'))
+    yml.addEventListener('click', () => exportar_vehiculos('yml'))
+</script>
 
 {% endblock contenido %}

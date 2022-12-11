@@ -1,7 +1,7 @@
 import datetime
 from django import forms
+from vehiculos.models import Vehiculo, Marca, Mantencion
 from vehiculos.models import Vehiculo
-from vehiculos.models import Mantencion
 
 class FiltrarMantencionesFormulario(forms.Form):
     mantencion = forms.ModelChoiceField(queryset=Mantencion.objects.all(
@@ -35,3 +35,9 @@ class VehiculoFormulario(forms.ModelForm):
         if marca != modelo.marca:
             raise forms.ValidationError('El modelo no coincide con la marca')
         return modelo
+
+
+class FiltrarVehiculosFormulario(forms.Form):
+    marca = forms.ModelChoiceField(queryset=Marca.objects.all(),
+                                   widget=forms.Select(attrs={'class': 'form-select'}), required=False)
+    año = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control'}), required=False)

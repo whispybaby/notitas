@@ -1,6 +1,15 @@
 import datetime
 from django import forms
 from vehiculos.models import Vehiculo
+from vehiculos.models import Mantencion
+
+class FiltrarMantencionesFormulario(forms.Form):
+    mantencion = forms.ModelChoiceField(queryset=Mantencion.objects.all(
+    ), widget=forms.Select(attrs={'class': 'form-select'}), required=False)
+    fecha_inicial = forms.DateField(widget=forms.DateInput(
+        attrs={'class': 'form-control', 'type': 'date'}), required=False)
+    fecha_final = forms.DateField(widget=forms.DateInput(
+        attrs={'class': 'form-control', 'type': 'date'}), required=False)
 
 
 class VehiculoFormulario(forms.ModelForm):

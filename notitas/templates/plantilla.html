@@ -4,54 +4,54 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notitas: {% block titulo %}{% endblock titulo %}</title>
-    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-        crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notitas: {% block titulo %}{% endblock titulo %}</title>
+  <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+    crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <nav class="bg-light border navbar navbar-expand-md navbar-light mb-3">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'vehiculos:index' %}"><span>Notitas</span></a>
+  <nav class="bg-light border navbar navbar-expand-md navbar-light mb-3">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'vehiculos:index' %}"><span>Notitas</span></a>
 
-            <div class="dropdown">
-                {% if request.session.id_usuario %}
-                <button class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown">
-                    {{ request.session.nombre_usuario }}
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a href="{% url 'usuarios:cerrar' %}" class="dropdown-item">Cerrar sesión</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a href="{% url 'usuarios:eliminar' %}" class="dropdown-item">Eliminar cuenta</a></li>
-                </ul>
-                {% else %}
-                <button class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown">
-                    Sin cuenta
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a href="{% url 'usuarios:iniciar' %}" class="dropdown-item">Iniciar sesión</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a href="{% url 'usuarios:registro' %}" class="dropdown-item">Registrarse</a></li>
-                </ul>
-                {% endif %}
-            </div>
+      <div class="dropdown">
+        {% if request.session.id_usuario %}
+        <button class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown">
+          {{ request.session.nombre_usuario }}
+        </button>
+        <ul class="dropdown-menu">
+          <li><a href="{% url 'usuarios:cerrar' %}" class="dropdown-item">Cerrar sesión</a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a href="{% url 'usuarios:eliminar' %}" class="dropdown-item">Eliminar cuenta</a></li>
+        </ul>
+        {% else %}
+        <button class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown">
+          Sin cuenta
+        </button>
+        <ul class="dropdown-menu">
+          <li><a href="{% url 'usuarios:iniciar' %}" class="dropdown-item">Iniciar sesión</a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a href="{% url 'usuarios:registro' %}" class="dropdown-item">Registrarse</a></li>
+        </ul>
+        {% endif %}
+      </div>
 
-        </div>
-    </nav>
-    <div class="container">
-        {% block contenido %}{% endblock contenido %}
     </div>
+  </nav>
+  <div class="container">
+    {% block contenido %}{% endblock contenido %}
+  </div>
 </body>
 
 </html>

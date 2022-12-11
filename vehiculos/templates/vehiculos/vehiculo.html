@@ -5,43 +5,114 @@
 {% block contenido %}
 
 <h1>Mantenciones de {{ vehiculo.marca }} {{ vehiculo.modelo }}</h1>
-<a href="{% url 'vehiculos:crear_mantencion' vehiculo.id %}" class=" btn btn-secondary mb-3">Crear mantención</a>
-<div class="row gx-sm-3 gy-3">
-    {% for mantencion in mantenciones %}
-    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-        <div class="card">
-            <div class="card-body position-relative">
-                <div class="card-title">
-                    <h3>
-                        {{ mantencion.mantencion }}
-                    </h3>
-                </div>
-                <div class="card-text">
-                    {{ mantencion.fecha }} -
-                    {{ mantencion.kilometraje }}km
-
-                </div>
-                <div class="card-text">
-                    {{ mantencion.descripcion }}
-                </div>
-            </div>
-            <div class="card-footer">
-                <div class="container">
-                    <div class="row justify-content-end">
-                        <div class="col-auto">
-                            <a href="{% url 'vehiculos:actualizar_mantencion' vehiculo.id  mantencion.id%}"
-                                class="text-decoration-none btn btn-success card-link">⟳</a>
-                        </div>
-                        <div class="col-auto">
-                            <a href="{% url 'vehiculos:eliminar_mantencion' vehiculo.id mantencion.id %}"
-                                class="text-decoration-none btn btn-danger card-link">X</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="my-3">
+  <form method="get" class="row">
+    <div class="col-3 ">
+      {{formulario.mantencion}}
     </div>
-    {% endfor %}
+    <div class="col-2">
+      {{formulario.fecha_inicial}}
+    </div>
+    <div class="col-2">
+      {{formulario.fecha_final}}
+    </div>
+    <div class="col-1">
+      <input class="form-control btn btn-secondary" type="submit">
+    </div>
+
+    <div class="col-1">
+      <a href="{% url 'vehiculos:vehiculo' vehiculo.id %}" class="form-control btn btn-secondary">🐎</a>
+
+    </div>
+    <div class="col-3 dropdown">
+
+      <button class="form-control btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown">
+        Seleccione un formato </button>
+      <ul class="dropdown-menu">
+        <li>
+          <input class="dropdown-item" type="button" value="Excel" id="excel">
+        </li>
+        <li>
+          <input class="dropdown-item" type="button" value="Xml" id="xml">
+        </li>
+        <li>
+          <input class="dropdown-item" type="button" value="Pdf" id="pdf">
+        </li>
+        <li>
+          <input class="dropdown-item" type="button" value="Json" id="json">
+        </li>
+      </ul>
+
+
+    </div>
+  </form>
 </div>
 
+
+<a href="{% url 'vehiculos:crear_mantencion' vehiculo.id %}" class=" btn btn-secondary mb-3">Crear mantención</a>
+
+<div class="row gx-sm-3 gy-3">
+  {% for mantencion in mantenciones %}
+  <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+    <div class="card">
+      <div class="card-body position-relative">
+        <div class="card-title">
+          <h3>
+            {{ mantencion.mantencion }}
+          </h3>
+        </div>
+        <div class="card-text">
+          {{ mantencion.fecha }} -
+          {{ mantencion.kilometraje }}km
+
+        </div>
+        <div class="card-text">
+          {{ mantencion.descripcion }}
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="container">
+          <div class="row justify-content-end">
+            <div class="col-auto">
+              <a href="{% url 'vehiculos:actualizar_mantencion' vehiculo.id  mantencion.id%}"
+                class="text-decoration-none btn btn-success card-link">⟳</a>
+            </div>
+            <div class="col-auto">
+              <a href="{% url 'vehiculos:eliminar_mantencion' vehiculo.id mantencion.id %}"
+                class="text-decoration-none btn btn-danger card-link">X</a>
+            </div>
+            <div class="col-auto">
+              <a href="{% url 'vehiculos:exportar_mantenciones' vehiculo.id  %}"
+                class="text-decoration-none btn btn-secondary card-link">X</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+<script>
+
+  const json = document.getElementById('json')
+  const pdf = document.getElementById('pdf')
+  const excel = document.getElementById('excel')
+  const xml = document.getElementById('xml')
+
+  function exportar(tipo) {
+    const tipo_mantencion = "{{ request.GET.mantencion }}"
+    const fecha_inicial = "{{ request.GET.fecha_inicial }}"
+    const fecha_final = "{{ request.GET.fecha_final }}"
+    const parametros = `?mantencion=${tipo_mantencion}&fecha_inicial=${fecha_inicial}&fecha_final=${fecha_final}&formato=${tipo}`;
+    const ruta = "{% url 'vehiculos:exportar_mantenciones' vehiculo.id %}"
+    const url = ruta + parametros
+    open(url)
+  }
+
+  json.addEventListener('click', function () { exportar('json') });
+  excel.addEventListener('click', function () { exportar('excel') });
+  xml.addEventListener('click', function () { exportar('xml') });
+  pdf.addEventListener('click', function () { exportar('pdf') });
+
+</script>
 {% endblock contenido %}

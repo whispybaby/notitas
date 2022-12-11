@@ -8,36 +8,36 @@
 <a href="{% url 'vehiculos:crear' %}" class="btn btn-secondary mb-3">Agregar vehículo</a>
 
 <div class="row gx-sm-3 gy-3">
-    {% for vehiculo in vehiculos %}
-    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-        <div class="card">
-            <div class="card-body position-relative">
-                <div class="card-title">
-                    <h3>
-                        {{ vehiculo.marca }} {{ vehiculo.modelo }}
-                    </h3>
-                </div>
-                <a href="{% url 'vehiculos:vehiculo' vehiculo.id %}" class="stretched-link"></a>
-            </div>
-            <div class="card-footer">
-                <div class="container">
-                    <div class="row justify-content-end">
-                        <div class="col-auto">
-                            <a href="{% url 'vehiculos:actualizar' vehiculo.id %}"
-                                class="text-decoration-none btn btn-success card-link">⟳</a>
-                        </div>
-                        <div class="col-auto">
-                            <a href="{% url 'vehiculos:eliminar' vehiculo.id %}"
-                                class="text-decoration-none btn btn-danger card-link">X</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  {% for vehiculo in vehiculos %}
+  <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+    <div class="card">
+      <div class="card-body position-relative">
+        <div class="card-title">
+          <h3>
+            {{ vehiculo.marca }} {{ vehiculo.modelo }}
+          </h3>
         </div>
+        <a href="{% url 'vehiculos:vehiculo' vehiculo.id %}" class="stretched-link"></a>
+      </div>
+      <div class="card-footer">
+        <div class="container">
+          <div class="row justify-content-end">
+            <div class="col-auto">
+              <a href="{% url 'vehiculos:actualizar' vehiculo.id %}"
+                class="text-decoration-none btn btn-success card-link">⟳</a>
+            </div>
+            <div class="col-auto">
+              <a href="{% url 'vehiculos:eliminar' vehiculo.id %}"
+                class="text-decoration-none btn btn-danger card-link">X</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    {% empty %}
-    <h3>No hay vehículos</h3>
-    {% endfor %}
+  </div>
+  {% empty %}
+  <h3>No hay vehículos</h3>
+  {% endfor %}
 </div>
 
 {% endblock contenido %}

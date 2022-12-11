@@ -9,9 +9,8 @@
 <p class="alert alert-danger">{{ mensaje_error }}</p>
 {% endif %}
 <form method="post">
-    {% csrf_token %}
-    {{ formulario }}
-    <input type="submit" class="btn btn-secondary form-control mt-4" value="Iniciar sesión">
+  {% csrf_token %}
+  {{ formulario }}
+  <input type="submit" class="btn btn-secondary form-control mt-4" value="Iniciar sesión">
 </form>
-
 {% endblock contenido %}

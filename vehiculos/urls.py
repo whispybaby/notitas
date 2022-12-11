@@ -16,4 +16,6 @@ urlpatterns = [
          mantenciones.actualizar, name='actualizar_mantencion'),
     path('<int:id_vehiculo>/mantenciones/<int:id_mantencion>/eliminar',
          mantenciones.eliminar, name='eliminar_mantencion'),
+    path('<int:id_vehiculo>/exportar_mantenciones/',
+         vehiculos.exportar_mantenciones, name='exportar_mantenciones'),
 ]

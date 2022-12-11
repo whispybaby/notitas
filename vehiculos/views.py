@@ -13,6 +13,12 @@ def index(request):
     marca = request.GET.get('marca', None)
     año = request.GET.get('año', None)
 
+    if marca and not marca.isdigit():
+        marca = None
+
+    if año and not año.isdigit():
+        año = None
+
     if marca and año:
         vehiculos = Vehiculo.objects.filter(
             usuario=request.session['id_usuario'], marca=marca, año=año)
@@ -37,7 +43,13 @@ def exportar_vehiculos(request):
     marca = request.GET.get('marca', None)
     año = request.GET.get('año', None)
 
-    formatos = ['excel', 'csv', 'json']
+    if marca and not marca.isdigit():
+        marca = None
+
+    if año and not año.isdigit():
+        año = None
+
+    formatos = ['excel', 'csv', 'yml']
     formato = request.GET.get('formato', None)
 
     if formato not in formatos:
@@ -86,20 +98,20 @@ def exportar_vehiculos(request):
         for vehiculo in vehiculos:
             writer.writerow([vehiculo.marca, vehiculo.modelo, vehiculo.año])
 
-    elif formato == 'json':
-        import json
-        response = HttpResponse(content_type='application/json')
-        response['Content-Disposition'] = 'attachment; filename=vehiculos.json'
+    elif formato == 'yml':
+        import yaml
+        response = HttpResponse(content_type='text/yaml')
+        response['Content-Disposition'] = 'attachment; filename=vehiculos.yml'
 
-        vehiculos_json = []
+        vehiculos_yml = []
         for vehiculo in vehiculos:
-            vehiculos_json.append({
+            vehiculos_yml.append({
                 'marca': str(vehiculo.marca),
                 'modelo': str(vehiculo.modelo),
                 'año': str(vehiculo.año)
             })
 
-        response.write(json.dumps(vehiculos_json))
+        response.write(yaml.dump(vehiculos_yml))
 
     return response
 

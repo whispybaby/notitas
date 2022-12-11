@@ -31,7 +31,7 @@
                     <input type="button" value="Csv" class="dropdown-item" id="csv">
                 </li>
                 <li>
-                    <input type="button" value="Json" class="dropdown-item" id="json">
+                    <input type="button" value="Yml" class="dropdown-item" id="yml">
                 </li>
             </ul>
         </div>
@@ -55,7 +55,7 @@
                     <div class="row justify-content-end">
                         <div class="col-auto">
                             <a href="{% url 'vehiculos:actualizar' vehiculo.id %}"
-                                class="text-decoration-none btn btn-success card-link">⟳</a>
+                                class="text-decoration-none btn btn-success card-link">🗘</a>
                         </div>
                         <div class="col-auto">
                             <a href="{% url 'vehiculos:eliminar' vehiculo.id %}"
@@ -84,11 +84,11 @@
 
     const excel = document.getElementById('excel')
     const csv = document.getElementById('csv')
-    const json = document.getElementById('json')
+    const yml = document.getElementById('yml')
 
     excel.addEventListener('click', () => exportar_vehiculos('excel'))
     csv.addEventListener('click', () => exportar_vehiculos('csv'))
-    json.addEventListener('click', () => exportar_vehiculos('json'))
+    yml.addEventListener('click', () => exportar_vehiculos('yml'))
 </script>
 
 {% endblock contenido %}
